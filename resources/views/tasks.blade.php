@@ -1,11 +1,17 @@
-// resources/views/tasks.blade.php
+
  
 @extends('layouts.app')
  
 @section('content')
  
     <!-- Bootstrap Boilerplate... -->
- 
+    @if (count($tasks) > 0)
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Current Tasks
+        </div>
+
+        @endif
     <div class="panel-body">
         <!-- Display Validation Errors -->
         @include('common.errors')
@@ -33,6 +39,33 @@
             </div>
         </form>
     </div>
- 
+</div>
+<tbody>
+    @foreach ($tasks as $task)
+        <tr>
+            <!-- Task Name -->
+            <td class="table-text">
+                <div>{{ $task->name }}</div>
+            </td>
+
+            <td>
+                <form action="/task/{{ $task->id }}" method="POST">
+                    {{ csrf_field() }}
+                    {{ method_field('DELETE') }}
+         
+                    <button>Delete Task</button>
+                </form>
+            </td>
+            <td>
+                <form action="/task/{{ $task->id }}" method="POST">
+                    {{ csrf_field() }}
+                    {{ method_field('PUT') }}
+         
+                    <a href="edit.blade.php">k</button>
+                </form>
+            </td>
+        </tr>
+    @endforeach
+</tbody>
     <!-- TODO: Current Tasks -->
 @endsection
